@@ -1,0 +1,21 @@
+{% extends "servalope/base.html" %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="large-6 columns">
+      {{ form.errors }}
+
+      <form method="post" action="{% url 'servalope:register' %}">
+      {% csrf_token %}
+      {{ form }}
+
+      <input type="submit" value="Register" />
+      <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+  </div>
+{% endblock %}

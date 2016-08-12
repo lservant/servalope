@@ -1,1 +1,10 @@
-Logged Out <a href="{% url 'servalope:mailing-list' %}">Login</a>
+{% extends "servalope/base.html" %}
+
+{% block title %}
+  Logout
+{% endblock %}
+
+{% block content %}
+  Logged Out. <a href="{% url 'servalope:mailing-list' %}">Login</a>
+
+{% endblock %}

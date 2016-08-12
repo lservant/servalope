@@ -1,13 +1,34 @@
 from django.shortcuts import render
-from django.views.generic import *
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView
 from servalope.models import *
-from django.contrib.auth import logout
+from django.contrib.auth import logout, views as auth_views
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
-
+from servalope.forms import *
 
 # Create your views here.
+class RegisterView(FormView):
+    template_name = 'registration/register.html'
+    form_class = RegisterForm
+    success_url = '/admin/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        clean = form.cleaned_data
+        u = clean['username']
+        p = clean['password']
+        e = clean['email']
+        user = User.objects.create_user(u,e,p)
+        user.first_name = clean['first_name']
+        user.last_name = clean['last_name']
+        user.save()
+
+        return super(RegisterView, self).form_valid(form)
+
 class MailingListView(ListView):
     """Displays a list of mailings for a given user"""
 
@@ -16,8 +37,12 @@ class MailingListView(ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(MailingListView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        context['mailing_list'] = Mailing.objects.all()
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            print('Show all Mailings')
+            context['mailing_list'] = Mailing.objects.all()
+        else:
+            context['mailing_list'] = Mailing.objects.filter(customer=user)
 
         return context
 
