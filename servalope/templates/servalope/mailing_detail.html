@@ -1,0 +1,30 @@
+{% extends "servalope/base.html" %}
+
+{% block title %}
+  {{mailing.name}}
+{% endblock %}
+
+{% block content %}
+  <h2>{{ mailing.name }}</h2>
+  <a href="{% url 'servalope:mailing-list' %}">Go back</a>
+  <h2>Guests</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>RSVP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for guest in guest_list %}
+      <tr>
+        <td>{{ guest.first }} {{ guest.middle }} {{ guest.last }}</td>
+        <td>{{ guest.email }}</td>
+        <td>{{ guest.get_rsvp_label}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

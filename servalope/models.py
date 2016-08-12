@@ -14,7 +14,7 @@ class Mailing(models.Model):
     customer = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
     def __unicode__(self):
-        return u"Mailing"
+        return self.name
 
 class Guest(models.Model):
     """Represents a guest of a given mailing"""
@@ -32,4 +32,4 @@ class Guest(models.Model):
     rsvp = models.CharField(choices=RSVP_CHOICES,max_length=1)
 
     def __unicode__(self):
-        return u"Guest"
+        return self.first + self.last

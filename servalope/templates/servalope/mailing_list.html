@@ -19,7 +19,7 @@
     <tbody>
       {% for mailing in mailing_list %}
       <tr>
-        <td>{{ mailing.name }}</td>
+        <td><a href="{% url 'servalope:mailing' mailing.id %}">{{ mailing.name }}</a></td>
         <td>{{ mailing.date }}</td>
         <td>{{ mailing.message }}</td>
         <td>{{ mailing.customer }}</td>
