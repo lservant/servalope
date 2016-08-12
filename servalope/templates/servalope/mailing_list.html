@@ -1,0 +1,30 @@
+{% extends "servalope/base.html" %}
+
+{% block title %}
+  Mailings
+{% endblock %}
+
+{% block content %}
+  <h2>Mailings</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Message</th>
+        <th>Customer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mailing in mailing_list %}
+      <tr>
+        <td>{{ mailing.name }}</td>
+        <td>{{ mailing.date }}</td>
+        <td>{{ mailing.message }}</td>
+        <td>{{ mailing.customer }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
