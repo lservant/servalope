@@ -5,7 +5,7 @@
     <title>Servalope | {% block title %}Home{% endblock %}</title>
   </head>
   <body>
-    Welcome to Servalope!
+    Welcome to Servalope, {{ user.username }}! <a href="{% url 'servalope:logout' %}">Log Out</a>
     {% block content %}
     No content
     {% endblock %}

@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import *
 from servalope.models import *
+from django.contrib.auth import logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+
+
 
 # Create your views here.
 class MailingListView(ListView):
