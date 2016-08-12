@@ -1,14 +1,36 @@
-<!DOCTYPE html>
-<html>
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servalope | {% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'foundation/css/foundation.min.css' %}">
+    <link rel="stylesheet" href="{% static 'foundation/css/app.css' %}">
   </head>
   <body>
-    Welcome to Servalope, {{ user.username }}! <a href="{% url 'servalope:logout' %}">Log Out</a>
-    {% block content %}
-    No content
-    {% endblock %}
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Welcome to Servalope, {{ user.username }}!</h1>
+        <a href="{% url 'servalope:logout' %}">Log Out</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        {% block content %}
+        No content
+        {% endblock %}
+      </div>
+    </div>
+
+    <script src="{% static 'foundation/js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'foundation/js/vendor/what-input.js' %}"></script>
+    <script src="{% static 'foundation/js/vendor/foundation.js' %}"></script>
+    <script src="{% static 'foundation/js/vendor/app.js' %}"></script>
     {% block script %}{% endblock %}
+
   </body>
 </html>
