@@ -7,6 +7,11 @@
 {% block content %}
   <h2>Mailings</h2>
 
+  <form action="{% url 'servalope:create-mailing' %}" method="post">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+  </form>
   <table>
     <thead>
       <tr>

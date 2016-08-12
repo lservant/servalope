@@ -13,7 +13,7 @@ from servalope.forms import *
 class RegisterView(FormView):
     template_name = 'registration/register.html'
     form_class = RegisterForm
-    success_url = '/admin/'
+    success_url = '/'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
@@ -29,6 +29,23 @@ class RegisterView(FormView):
 
         return super(RegisterView, self).form_valid(form)
 
+class CreateMailing(FormView):
+    form_class = MailingForm
+    success_url = '/mailings/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        clean = form.cleaned_data
+        n = clean['name']
+        d = clean['date']
+        m = clean['message']
+        c = self.request.user
+        mailing = Mailing(name=n,date=d,message=m,customer=c)
+        mailing.save()
+
+        return super(CreateMailing, self).form_valid(form)
+
 class MailingListView(ListView):
     """Displays a list of mailings for a given user"""
 
@@ -43,6 +60,8 @@ class MailingListView(ListView):
             context['mailing_list'] = Mailing.objects.all()
         else:
             context['mailing_list'] = Mailing.objects.filter(customer=user)
+
+        context['create_form'] = MailingForm()
 
         return context
 

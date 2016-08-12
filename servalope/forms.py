@@ -12,3 +12,12 @@ class RegisterForm(ModelForm):
             'last_name',
             'email'
         ]
+
+class MailingForm(ModelForm):
+    class Meta:
+        model = Mailing
+        fields = [
+            'name',
+            'date',
+            'message'
+        ]
