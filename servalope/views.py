@@ -6,6 +6,7 @@ from django.contrib.auth import logout, views as auth_views
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django import forms
 
 from servalope.forms import *
 
@@ -65,6 +66,25 @@ class MailingListView(ListView):
 
         return context
 
+class AddGuest(FormView):
+    form_class = GuestForm
+    success_url = '/mailings/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        clean = form.cleaned_data
+        f = clean['first']
+        m = clean['middle']
+        l = clean['last']
+        e = clean['email']
+        mailing = clean['mailing']
+        rsvp = clean['rsvp']
+        guest = Guest(first=f,middle=m,last=l,email=e,mailing=mailing,rsvp=rsvp)
+        guest.save()
+
+        return super(AddGuest, self).form_valid(form)
+
 class MailingDetailView(DetailView):
     """Displays the guests and RSVP status for a given mailing"""
 
@@ -75,5 +95,9 @@ class MailingDetailView(DetailView):
         context = super(MailingDetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['guest_list'] = Guest.objects.filter(mailing=context['mailing'])
+        guest_form = GuestForm()
+        guest_form.fields['mailing'].widget = forms.HiddenInput()
+        guest_form.fields['mailing'].initial = context['mailing']
+        context['create_form'] = guest_form
 
         return context

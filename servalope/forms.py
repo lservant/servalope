@@ -10,7 +10,8 @@ class RegisterForm(ModelForm):
             'password',
             'first_name',
             'last_name',
-            'email'
+            'email',
+            # 'is_staff',
         ]
 
 class MailingForm(ModelForm):
@@ -20,4 +21,16 @@ class MailingForm(ModelForm):
             'name',
             'date',
             'message'
+        ]
+
+class GuestForm(ModelForm):
+    class Meta:
+        model = Guest
+        fields = [
+            'first',
+            'middle',
+            'last',
+            'email',
+            'mailing',
+            'rsvp'
         ]

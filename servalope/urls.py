@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^mailings/$', login_required(MailingListView.as_view()),name="mailing-list"),
     url(r'^mailings/create$', login_required(CreateMailing.as_view()),name="create-mailing"),
     url(r'^mailings/(?P<pk>[0-9])+/$', login_required(MailingDetailView.as_view()),name="mailing"),
+    url(r'^mailings/add-guest$', login_required(AddGuest.as_view()),name="add-guest"),
     url(r'^accounts/register$',RegisterView.as_view(),name='register'),
     url('^accounts/', include('django.contrib.auth.urls')),
     # url(r'^$', views.index, name='index'),

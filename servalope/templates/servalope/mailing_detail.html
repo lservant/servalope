@@ -7,24 +7,34 @@
 {% block content %}
   <h2>{{ mailing.name }}</h2>
   <a href="{% url 'servalope:mailing-list' %}">Go back</a>
-  <h2>Guests</h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>RSVP</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for guest in guest_list %}
-      <tr>
-        <td>{{ guest.first }} {{ guest.middle }} {{ guest.last }}</td>
-        <td>{{ guest.email }}</td>
-        <td>{{ guest.get_rsvp_label}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Guest List</h2>
+  <div class="row">
+    <div class="large-4 columns">
+      <form action="{% url 'servalope:add-guest' %}" method="post">
+        {% csrf_token %}
+        {{ create_form }}
+        <input type="submit" value="Add a guest">
+      </form>
+    </div>
+    <div class="large-8 columns">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>RSVP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for guest in guest_list %}
+          <tr>
+            <td>{{ guest.first }} {{ guest.middle }} {{ guest.last }}</td>
+            <td>{{ guest.email }}</td>
+            <td>{{ guest.get_rsvp_display}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

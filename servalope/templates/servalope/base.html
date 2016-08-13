@@ -16,6 +16,11 @@
         {% if user.is_authenticated %}
           <h1>Welcome to Servalope, {{ user.username }}!</h1>
           <a href="{% url 'servalope:logout' %}">Log Out</a>
+          {% if user.is_superuser %}
+          <p>
+            As a staff member, you'll be able to see all mailings, even the ones that others create.  You can also access the <a href="/admin">admin site</a> to create, update, or remove entries from mailings, guests, and users.
+          </p>
+          {% endif %}
         {% else %}
           <h1>Welcome to Servalope!</h1>
         {% endif %}
